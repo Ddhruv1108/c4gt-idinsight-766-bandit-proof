@@ -1,0 +1,151 @@
+{
+  "type": "bandit",
+  "experiment_id": "demo-evidential-bandit-001",
+  "experiment_name": "WhatsApp homework reminder optimization",
+  "n_outcomes": 500,
+  "created_at": "2026-05-03T00:00:00Z",
+  "contexts": null,
+  "policy_metadata": {
+    "policy": "top_two_thompson_sampling",
+    "candidate_policy": "ucb1",
+    "reward": "homework_completed",
+    "prototype_note": "Synthetic proposal proof, not upstream Evidential output."
+  },
+  "arm_analyses": [
+    {
+      "arm_id": "arm_control",
+      "arm_name": "Current reminder",
+      "arm_description": "Existing WhatsApp reminder copy",
+      "prior_pred_mean": 0.1,
+      "prior_pred_stdev": 0.3,
+      "prior_pred_ci_lower": 0.02,
+      "prior_pred_ci_upper": 0.28,
+      "post_pred_mean": 0.074,
+      "post_pred_stdev": 0.262,
+      "post_pred_ci_lower": 0.045,
+      "post_pred_ci_upper": 0.111,
+      "alpha_init": 1.0,
+      "beta_init": 9.0,
+      "alpha": 8.0,
+      "beta": 96.0,
+      "mu_init": null,
+      "sigma_init": null,
+      "mu": null,
+      "covariance": null,
+      "assignment_count": 94,
+      "reward_count": 7,
+      "assignment_share": 0.188,
+      "observed_rate": 0.0745,
+      "status": "baseline"
+    },
+    {
+      "arm_id": "arm_motivational",
+      "arm_name": "Motivational reminder",
+      "arm_description": "Short motivational message sent before homework deadline",
+      "prior_pred_mean": 0.1,
+      "prior_pred_stdev": 0.3,
+      "prior_pred_ci_lower": 0.02,
+      "prior_pred_ci_upper": 0.28,
+      "post_pred_mean": 0.153,
+      "post_pred_stdev": 0.36,
+      "post_pred_ci_lower": 0.116,
+      "post_pred_ci_upper": 0.196,
+      "alpha_init": 1.0,
+      "beta_init": 9.0,
+      "alpha": 50.0,
+      "beta": 278.0,
+      "mu_init": null,
+      "sigma_init": null,
+      "mu": null,
+      "covariance": null,
+      "assignment_count": 318,
+      "reward_count": 49,
+      "assignment_share": 0.636,
+      "observed_rate": 0.1541,
+      "status": "leading but uncertain"
+    },
+    {
+      "arm_id": "arm_parent",
+      "arm_name": "Parent prompt",
+      "arm_description": "Reminder asking the parent to nudge the student",
+      "prior_pred_mean": 0.1,
+      "prior_pred_stdev": 0.3,
+      "prior_pred_ci_lower": 0.02,
+      "prior_pred_ci_upper": 0.28,
+      "post_pred_mean": 0.091,
+      "post_pred_stdev": 0.288,
+      "post_pred_ci_lower": 0.054,
+      "post_pred_ci_upper": 0.139,
+      "alpha_init": 1.0,
+      "beta_init": 9.0,
+      "alpha": 9.0,
+      "beta": 89.0,
+      "mu_init": null,
+      "sigma_init": null,
+      "mu": null,
+      "covariance": null,
+      "assignment_count": 88,
+      "reward_count": 8,
+      "assignment_share": 0.176,
+      "observed_rate": 0.0909,
+      "status": "needs more data"
+    }
+  ],
+  "allocation_history": [
+    {
+      "round": 50,
+      "leader": "motivational_reminder",
+      "control_share": 0.36,
+      "motivational_reminder_share": 0.34,
+      "parent_prompt_share": 0.3,
+      "cumulative_regret_vs_oracle": 2.4
+    },
+    {
+      "round": 100,
+      "leader": "motivational_reminder",
+      "control_share": 0.32,
+      "motivational_reminder_share": 0.43,
+      "parent_prompt_share": 0.25,
+      "cumulative_regret_vs_oracle": 4.8
+    },
+    {
+      "round": 200,
+      "leader": "motivational_reminder",
+      "control_share": 0.27,
+      "motivational_reminder_share": 0.51,
+      "parent_prompt_share": 0.22,
+      "cumulative_regret_vs_oracle": 7.6
+    },
+    {
+      "round": 500,
+      "leader": "motivational_reminder",
+      "control_share": 0.188,
+      "motivational_reminder_share": 0.636,
+      "parent_prompt_share": 0.176,
+      "cumulative_regret_vs_oracle": 13.1
+    }
+  ],
+  "audit_events": [
+    {
+      "round": 50,
+      "event": "initial_exploration",
+      "selected_arm": "motivational_reminder",
+      "reason": "posterior sample highest while arms remain close",
+      "outcome_observed": true
+    },
+    {
+      "round": 200,
+      "event": "allocation_shift",
+      "selected_arm": "motivational_reminder",
+      "reason": "higher posterior mean, still preserving exploration",
+      "outcome_observed": true
+    },
+    {
+      "round": 500,
+      "event": "review_checkpoint",
+      "selected_arm": "motivational_reminder",
+      "reason": "leader but credible interval still overlaps with parent prompt",
+      "outcome_observed": true
+    }
+  ]
+}

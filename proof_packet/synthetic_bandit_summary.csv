@@ -1,0 +1,5 @@
+round,control_assignments,motivational_reminder_assignments,parent_prompt_assignments,control_rewards,motivational_reminder_rewards,parent_prompt_rewards,control_rate,motivational_reminder_rate,parent_prompt_rate,leader,cumulative_regret_vs_oracle
+50,18,17,15,1,2,1,0.0556,0.1176,0.0667,motivational_reminder,2.4
+100,32,43,25,2,5,2,0.0625,0.1163,0.0800,motivational_reminder,4.8
+200,54,102,44,4,14,4,0.0741,0.1373,0.0909,motivational_reminder,7.6
+500,94,318,88,7,49,8,0.0745,0.1541,0.0909,motivational_reminder,13.1

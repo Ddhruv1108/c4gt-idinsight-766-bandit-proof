@@ -1,16 +1,5 @@
 # Next Upgrade Path
 
-## Immediate Next Steps
-1. Add backend mock server
-2. Connect to sample data
-3. Add basic interactivity
+Confirm the exact upstream repository target and add a tiny docs/test touchpoint if maintainers prefer codebase-first proof.
 
-## If Selected for GSoC
-1. Set up development environment
-2. Claim first starter issue
-3. Build minimum viable feature
-
-## Resource Needs
-- Mentor guidance on architecture
-- Access to test data (if applicable)
-- Repository access
+Keep all future claims tied to runnable artifacts, screenshots, or source-cited notes in `proof_packet/`.

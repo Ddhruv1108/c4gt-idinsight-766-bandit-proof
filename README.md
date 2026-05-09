@@ -1,24 +1,30 @@
-# IDinsight #766 - Bandit Experiment
+# IDinsight #766 - Evidential Bandits
 
-**C4GT 2026 Proof Repository**
-
-## Issue
-Multi-arm bandit for policy optimization
+C4GT 2026 reviewer proof packet.
 
 ## What This Proof Shows
-Dashboard mapping + policy contract only - no live experiment
 
-## What's Not Proven
-- No upstream PRs merged
-- No production deployment
-- No real user data
-- No backend integration
+- Evidential-shaped JSON response and synthetic CSV
+- dashboard prototype and mapping notes
+- policy contract and runtime proof rerun notes
+- bandit engine flow and dashboard screenshots
 
-## Files
-- `MIFI_PROTOTYPE/` - Interactive prototype
-- `screenshots/` - Visual evidence
-- `EVIDENCE/` - Additional proof artifacts
+## What This Proof Does Not Claim
 
----
+- no real nonprofit experiment data
+- no production model
+- no upstream PR
 
-*This is a proof-of-concept for C4GT 2026 application. Not for production use.*
+## Files To Inspect
+
+- `proof_packet/`
+- `BANDIT_PROOF_PACKAGE/`
+- `BANDIT_PROOF_PACKAGE/screenshots/`
+
+## Next Upgrade
+
+Confirm the exact upstream repository target and add a tiny docs/test touchpoint if maintainers prefer codebase-first proof.
+
+## Boundary
+
+This repo is application proof, not production code. Claims are limited to the artifacts listed above.

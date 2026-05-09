@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Evidential Bandit Results Proof</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --ink: #18212f;
+      --muted: #5d6878;
+      --line: #d9dee7;
+      --blue: #2563eb;
+      --green: #14805e;
+      --amber: #9a6700;
+      --red: #b42318;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    header {
+      background: #0f172a;
+      color: #fff;
+      padding: 24px 32px;
+      border-bottom: 4px solid var(--blue);
+    }
+    header p { margin: 6px 0 0; color: #cbd5e1; max-width: 920px; }
+    main { max-width: 1180px; margin: 0 auto; padding: 24px; }
+    section { margin-bottom: 22px; }
+    h1 { margin: 0; font-size: 28px; letter-spacing: 0; }
+    h2 { margin: 0 0 12px; font-size: 18px; }
+    h3 { margin: 0 0 8px; font-size: 15px; }
+    .grid { display: grid; gap: 14px; }
+    .summary { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .arms { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+    .metric-label { color: var(--muted); font-size: 12px; text-transform: uppercase; font-weight: 700; }
+    .metric-value { margin-top: 4px; font-size: 24px; font-weight: 750; }
+    .muted { color: var(--muted); }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      border-radius: 999px;
+      padding: 2px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #eef2ff;
+      color: #1d4ed8;
+    }
+    .tag.green { background: #e8f6ef; color: var(--green); }
+    .tag.amber { background: #fff4d6; color: var(--amber); }
+    .tag.red { background: #fee4e2; color: var(--red); }
+    .bar {
+      width: 100%;
+      height: 10px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 10px 0 6px;
+    }
+    .bar span { display: block; height: 100%; background: var(--blue); }
+    table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); }
+    th, td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #f8fafc; color: #334155; font-size: 12px; text-transform: uppercase; }
+    tr:last-child td { border-bottom: 0; }
+    code {
+      background: #eef2f7;
+      border: 1px solid #dbe2ea;
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-size: 12px;
+    }
+    .note {
+      border-left: 4px solid var(--amber);
+      background: #fffbeb;
+      padding: 12px 14px;
+      color: #713f12;
+      border-radius: 6px;
+    }
+    footer { padding: 16px 24px 28px; text-align: center; color: var(--muted); }
+    @media (max-width: 860px) {
+      header { padding: 20px; }
+      main { padding: 16px; }
+      .summary, .arms { grid-template-columns: 1fr; }
+      table { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Evidential Bandit Results Proof</h1>
+    <p>Mi-fi proposal prototype for IDinsight #766. Synthetic data, shaped around Evidential's current bandit analysis response model.</p>
+  </header>
+  <main>
+    <section>
+      <h2>Experiment Summary</h2>
+      <div class="grid summary">
+        <div class="panel">
+          <div class="metric-label">Experiment</div>
+          <div class="metric-value" style="font-size:18px">WhatsApp homework reminder</div>
+          <div class="muted">Outcome: homework completed</div>
+        </div>
+        <div class="panel">
+          <div class="metric-label">Current Leader</div>
+          <div class="metric-value">Motivational</div>
+          <span class="tag amber">leading but uncertain</span>
+        </div>
+        <div class="panel">
+          <div class="metric-label">Observed Outcomes</div>
+          <div class="metric-value">500</div>
+          <div class="muted">Synthetic proposal proof</div>
+        </div>
+        <div class="panel">
+          <div class="metric-label">Policy</div>
+          <div class="metric-value" style="font-size:18px">Top-Two Thompson</div>
+          <div class="muted">UCB1 shown as candidate extension</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Arm Results</h2>
+      <div id="armCards" class="grid arms"></div>
+    </section>
+
+    <section>
+      <h2>Allocation Over Time</h2>
+      <table id="allocationTable"></table>
+    </section>
+
+    <section>
+      <h2>Replay / Audit Trail</h2>
+      <table id="auditTable"></table>
+    </section>
+
+    <section>
+      <h2>How This Maps To Evidential</h2>
+      <div class="panel">
+        <p>This prototype starts from fields already present in or adjacent to Evidential's backend: <code>BanditExperimentAnalysisResponse</code>, <code>BanditArmAnalysis</code>, assignment counts, context values, and policy metadata.</p>
+        <p>The proposal work would keep Thompson/Top-Two Thompson paths intact, add UCB only if mentors confirm priority, and expose replay-friendly metadata so adaptive allocation can be inspected later.</p>
+        <div class="note">Prototype proof, not upstream Evidential UI. Synthetic values are for proposal discussion only.</div>
+      </div>
+    </section>
+  </main>
+  <footer>Prepared for C4GT DMP 2026 proposal research: IDinsight #766.</footer>
+
+  <script>
+    const data = {
+      type: "bandit",
+      experiment_id: "demo-evidential-bandit-001",
+      n_outcomes: 500,
+      policy: "top_two_thompson_sampling",
+      arms: [
+        { name: "Current reminder", mean: 0.074, low: 0.045, high: 0.111, share: 0.188, rewards: 7, assignments: 94, status: "baseline" },
+        { name: "Motivational reminder", mean: 0.153, low: 0.116, high: 0.196, share: 0.636, rewards: 49, assignments: 318, status: "leading but uncertain" },
+        { name: "Parent prompt", mean: 0.091, low: 0.054, high: 0.139, share: 0.176, rewards: 8, assignments: 88, status: "needs more data" }
+      ],
+      allocation: [
+        { round: 50, control: "36%", motivational: "34%", parent: "30%", leader: "Motivational reminder", regret: 2.4 },
+        { round: 100, control: "32%", motivational: "43%", parent: "25%", leader: "Motivational reminder", regret: 4.8 },
+        { round: 200, control: "27%", motivational: "51%", parent: "22%", leader: "Motivational reminder", regret: 7.6 },
+        { round: 500, control: "18.8%", motivational: "63.6%", parent: "17.6%", leader: "Motivational reminder", regret: 13.1 }
+      ],
+      audit: [
+        { round: 50, event: "initial_exploration", selected: "Motivational reminder", reason: "posterior sample highest while arms remain close" },
+        { round: 200, event: "allocation_shift", selected: "Motivational reminder", reason: "higher posterior mean, still preserving exploration" },
+        { round: 500, event: "review_checkpoint", selected: "Motivational reminder", reason: "leader but interval still overlaps with parent prompt" }
+      ]
+    };
+
+    const statusClass = (status) => status.includes("uncertain") ? "amber" : status.includes("needs") ? "red" : "green";
+    document.getElementById("armCards").innerHTML = data.arms.map((arm) => `
+      <article class="panel">
+        <h3>${arm.name}</h3>
+        <span class="tag ${statusClass(arm.status)}">${arm.status}</span>
+        <div class="metric-label" style="margin-top:14px">Posterior expected outcome</div>
+        <div class="metric-value">${(arm.mean * 100).toFixed(1)}%</div>
+        <div class="muted">95% interval ${(arm.low * 100).toFixed(1)}% to ${(arm.high * 100).toFixed(1)}%</div>
+        <div class="bar"><span style="width:${arm.share * 100}%"></span></div>
+        <div class="muted">${(arm.share * 100).toFixed(1)}% assignment share · ${arm.rewards}/${arm.assignments} observed rewards</div>
+      </article>
+    `).join("");
+
+    document.getElementById("allocationTable").innerHTML = `
+      <thead><tr><th>Round</th><th>Current</th><th>Motivational</th><th>Parent</th><th>Leader</th><th>Regret vs oracle</th></tr></thead>
+      <tbody>${data.allocation.map((row) => `<tr><td>${row.round}</td><td>${row.control}</td><td>${row.motivational}</td><td>${row.parent}</td><td>${row.leader}</td><td>${row.regret}</td></tr>`).join("")}</tbody>
+    `;
+
+    document.getElementById("auditTable").innerHTML = `
+      <thead><tr><th>Round</th><th>Event</th><th>Selected Arm</th><th>Reason To Inspect</th></tr></thead>
+      <tbody>${data.audit.map((row) => `<tr><td>${row.round}</td><td><code>${row.event}</code></td><td>${row.selected}</td><td>${row.reason}</td></tr>`).join("")}</tbody>
+    `;
+  </script>
+</body>
+</html>
